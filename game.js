@@ -5,12 +5,23 @@ var userClickedPattern = [];
 var level = 0;
 var started = false;
 var currentLevel = 0;
+var highScore = 0;
 
 $(document).on("keydown", function () {
   if (started === false) {
     started = true;
     nextSequence();
   }
+});
+
+// Add click on exit text to exit from game
+$(".exit").click(function () {
+  $("#level-title").text("Press A Key to Start");
+  if (level > highScore) {
+    highScore = level - 1;
+    $("#high-score").text(`High Score : ${highScore}`);
+  }
+  startOver();
 });
 
 // Add button click handlers to all the buttons
@@ -94,6 +105,11 @@ function checkAnswer(currentLevel) {
       }, 1000);
     }
   } else {
+    console.log("currentLevel" + currentLevel);
+    if (level > highScore) {
+      highScore = level - 1;
+      $("#high-score").text(`High Score : ${highScore}`);
+    }
     startOver();
     gameOverAnimation();
   }
